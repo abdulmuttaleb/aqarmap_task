@@ -21,9 +21,13 @@ android {
     }
 
     buildTypes {
+        debug{
+            buildConfigField "String", "API_KEY", themoviedb_api_ky
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "API_KEY", themoviedb_api_ky
         }
     }
     compileOptions {
@@ -44,6 +48,8 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.recyclerview:recyclerview:1.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.wear:wear:1.0.0'
+    compileOnly 'com.google.android.wearable:wearable:2.6.0'
 
     def dagger_version = "2.21"
     implementation "com.google.dagger:dagger:$dagger_version"
