@@ -1,6 +1,7 @@
 package com.ahmad.aqarmaptask.remote
 
 import com.ahmad.aqarmaptask.utils.NetworkUtils
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -22,10 +23,14 @@ object RetrofitBuilder {
             .addInterceptor(loggingInterceptor)
             .build()
 
+    private val gsonBuilder = GsonBuilder()
+        .setLenient()
+        .create()
+
     val retrofitBuilder: Retrofit.Builder by lazy{
         Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("https://www.themoviedb.org/documentation/api")
+                .addConverterFactory(GsonConverterFactory.create(gsonBuilder))
+                .baseUrl(NetworkUtils.BASE_URL)
                 .client(okHttpClient)
     }
 

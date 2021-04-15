@@ -16,7 +16,7 @@ open class BaseActivity: AppCompatActivity(), ConnectivityReceiver.ConnectivityR
         initObservers()
     }
 
-    fun initObservers(){
+    private fun initObservers(){
         if(!isOnline.hasObservers()){
             isOnline.observe(this, {
                 if (it == false) {
