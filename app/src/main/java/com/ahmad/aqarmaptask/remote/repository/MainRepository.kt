@@ -23,19 +23,23 @@ object MainRepository {
                 super.onActive()
                 getPopularMoviesJob?.let { taskJob ->
                     CoroutineScope(IO + taskJob).launch {
-                        withContext(Main){
-                            value = Resource.loading()
-                        }
-
-                        val fetchPopularMoviesResponse = RetrofitBuilder.mainApi.getPopularMovies(
-                            API_KEY,page)
-
-                        withContext(Main) {
-                            value = if (fetchPopularMoviesResponse.isSuccessful) {
-                                Resource.success(fetchPopularMoviesResponse)
-                            } else {
-                                Resource.error(getMessageFromErrorBody(fetchPopularMoviesResponse.errorBody()))
+                        try{
+                            withContext(Main){
+                                value = Resource.loading()
                             }
+
+                            val fetchPopularMoviesResponse = RetrofitBuilder.mainApi.getPopularMovies(
+                                API_KEY,page)
+
+                            withContext(Main) {
+                                value = if (fetchPopularMoviesResponse.isSuccessful) {
+                                    Resource.success(fetchPopularMoviesResponse)
+                                } else {
+                                    Resource.error(getMessageFromErrorBody(fetchPopularMoviesResponse.errorBody()))
+                                }
+                            }
+                        }catch (e: Exception){
+                            value = Resource.error("Exception: ${e.localizedMessage}")
                         }
                     }
                     taskJob.complete()
