@@ -25,6 +25,7 @@ object RetrofitBuilder {
 
     private val gsonBuilder = GsonBuilder()
         .setLenient()
+        .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
         .create()
 
     val retrofitBuilder: Retrofit.Builder by lazy{

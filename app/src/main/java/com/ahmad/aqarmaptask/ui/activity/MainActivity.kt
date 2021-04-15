@@ -23,7 +23,7 @@ class MainActivity : BaseActivity() {
 
     fun initObservers(){
         mainViewModel.popularMovies.observe(this, {
-            Log.e(TAG, "initObservers: ${it.data?.body()}")
+            Log.e(TAG, "initObservers: ${it.data?.body()?.results.toString()}")
         })
     }
 }

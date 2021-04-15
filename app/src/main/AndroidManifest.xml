@@ -14,8 +14,7 @@
         android:theme="@style/Theme.AqarmapTask">
 
         <activity
-            android:name=".ui.activity.MainActivity"
-            android:label="@string/title_activity_main">
+            android:name=".ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.ahmad.aqarmaptask.remote.Resource
 import com.ahmad.aqarmaptask.remote.RetrofitBuilder
 import com.ahmad.aqarmaptask.remote.response.BaseResponse
+import com.ahmad.aqarmaptask.remote.response.PopularMoviesResponse
 import com.ahmad.aqarmaptask.utils.NetworkUtils.API_KEY
 import com.ahmad.aqarmaptask.utils.NetworkUtils.getMessageFromErrorBody
 import kotlinx.coroutines.*
@@ -15,9 +16,9 @@ object MainRepository {
 
     private var getPopularMoviesJob: CompletableJob? = null
 
-    fun getPopularMovies(page:Int): LiveData<Resource<Response<BaseResponse>>>{
+    fun getPopularMovies(page:Int): LiveData<Resource<Response<PopularMoviesResponse>>>{
         getPopularMoviesJob = Job()
-        return object : LiveData<Resource<Response<BaseResponse>>>(){
+        return object : LiveData<Resource<Response<PopularMoviesResponse>>>(){
             override fun onActive() {
                 super.onActive()
                 getPopularMoviesJob?.let { taskJob ->
