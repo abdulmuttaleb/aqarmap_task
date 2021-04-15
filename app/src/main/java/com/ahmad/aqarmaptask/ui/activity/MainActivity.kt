@@ -4,16 +4,18 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.ahmad.aqarmaptask.R
+import com.ahmad.aqarmaptask.databinding.ActivityMainBinding
 import com.ahmad.aqarmaptask.viewmodel.MainViewModel
 
 class MainActivity : BaseActivity() {
 
     lateinit var mainViewModel: MainViewModel
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         initObservers()
