@@ -1,5 +1,6 @@
 package com.ahmad.aqarmaptask.ui.fragment
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ahmad.aqarmaptask.R
 import com.ahmad.aqarmaptask.adapter.MovieRecyclerAdapter
@@ -53,8 +55,14 @@ class MovieListFragment : Fragment() {
 
     fun initFragment(){
 
-        val linearLayoutManager = LinearLayoutManager(requireContext())
-        binding.rvMovies.layoutManager = linearLayoutManager
+        val gridLayoutManager = GridLayoutManager(requireContext(),
+                if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
+                    2
+                }else{
+                    4
+                }
+        )
+        binding.rvMovies.layoutManager = gridLayoutManager
 
         movieRecyclerAdapter = MovieRecyclerAdapter()
 

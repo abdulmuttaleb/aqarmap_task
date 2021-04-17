@@ -33,9 +33,9 @@ class MovieRecyclerAdapter: RecyclerView.Adapter<MovieRecyclerAdapter.MovieViewH
     inner class MovieViewHolder(val itemMovieBinding: ItemMovieBinding): RecyclerView.ViewHolder(itemMovieBinding.root){
         fun bind(movie: Movie){
             itemMovieBinding.tvMovieTitle.text = movie.title
-            itemMovieBinding.tvRating.text = movie.voteAverage.toString().plus(" /10")
-            itemMovieBinding.tvOverview.text = movie.overview
-            itemMovieBinding.tvDate.text = DateTime.parse(movie.releaseDate).toString("dd/MMM/yyyy")
+            itemMovieBinding.tvRating.text = movie.voteAverage.toString()
+//            itemMovieBinding.tvOverview.text = movie.overview
+//            itemMovieBinding.tvDate.text = DateTime.parse(movie.releaseDate).toString("dd/MMM/yyyy")
             Picasso.get()
                     .load(NetworkUtils.IMAGES_BASE_URL.plus(movie.posterPath))
                     .resize(300, 400)
