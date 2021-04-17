@@ -12,7 +12,6 @@ class MyApplication: Application(){
 
     var connectivityReceiver = ConnectivityReceiver()
 
-
     override fun onCreate() {
         super.onCreate()
         instance = this

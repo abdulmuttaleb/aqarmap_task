@@ -1,6 +1,7 @@
 package com.ahmad.aqarmaptask.remote.repository
 
 import androidx.lifecycle.LiveData
+import com.ahmad.aqarmaptask.remote.MainApi
 import com.ahmad.aqarmaptask.remote.Resource
 import com.ahmad.aqarmaptask.remote.RetrofitBuilder
 import com.ahmad.aqarmaptask.remote.response.BaseResponse
@@ -11,9 +12,9 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import retrofit2.Response
+import javax.inject.Inject
 
 object MainRepository {
-
     private var getPopularMoviesJob: CompletableJob? = null
 
     fun getPopularMovies(page:Int): LiveData<Resource<Response<PopularMoviesResponse>>>{
@@ -39,7 +40,9 @@ object MainRepository {
                                 }
                             }
                         }catch (e: Exception){
-                            value = Resource.error("Exception: ${e.localizedMessage}")
+                            withContext(Main){
+                                value = Resource.error("Exception: ${e.localizedMessage}")
+                            }
                         }
                     }
                     taskJob.complete()
