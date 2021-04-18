@@ -48,7 +48,6 @@ class MovieDetailsFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        navController = Navigation.findNavController(view)
 
         passedMovie = arguments?.getSerializable("passedMovie") as Movie
 

@@ -46,7 +46,6 @@ class MovieListFragment : Fragment(), MovieRecyclerAdapter.MovieItemClickListene
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = Navigation.findNavController(view)
-        //todo initialize everything here
 
         mainViewModel = ViewModelProvider(requireActivity(), MainViewModelFactory(requireContext())).get(MainViewModel::class.java)
 
@@ -99,8 +98,6 @@ class MovieListFragment : Fragment(), MovieRecyclerAdapter.MovieItemClickListene
     }
 
     override fun onMovieItemClicked(movie: Movie) {
-//        val action = MovieListFragmentDirections.actionMovieListFragmentToMovieDetailsFragment(passedMovie = movie)
-//        navController.navigate(action)
         val movieDetailFragment = MovieDetailsFragment()
         val args = Bundle()
         args.putSerializable("passedMovie", movie)

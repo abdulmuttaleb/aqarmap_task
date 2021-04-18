@@ -10,7 +10,6 @@ import com.ahmad.aqarmaptask.viewmodel.MainViewModel
 
 class MainActivity : BaseActivity() {
 
-    lateinit var mainViewModel: MainViewModel
     lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
