@@ -94,8 +94,14 @@ class MovieListFragment : Fragment(), MovieRecyclerAdapter.MovieItemClickListene
     }
 
     override fun onMovieItemClicked(movie: Movie) {
-        val action = MovieListFragmentDirections.actionMovieListFragmentToMovieDetailsFragment(passedMovie = movie)
-        navController.navigate(action)
+//        val action = MovieListFragmentDirections.actionMovieListFragmentToMovieDetailsFragment(passedMovie = movie)
+//        navController.navigate(action)
+        val movieDetailFragment = MovieDetailsFragment()
+        val args = Bundle()
+        args.putSerializable("passedMovie", movie)
+        movieDetailFragment.arguments = args
+
+        movieDetailFragment.show(parentFragmentManager, "movieDetails")
     }
 
     override fun onDestroy() {

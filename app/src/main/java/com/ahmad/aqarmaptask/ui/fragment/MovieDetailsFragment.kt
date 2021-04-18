@@ -12,6 +12,7 @@ import android.view.Window
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.navArgs
+import com.ahmad.aqarmaptask.R
 import com.ahmad.aqarmaptask.databinding.FragmentMovieDetailsBinding
 import com.ahmad.aqarmaptask.model.Movie
 import com.ahmad.aqarmaptask.utils.NetworkUtils
@@ -24,11 +25,7 @@ class MovieDetailsFragment : DialogFragment() {
     private var _binding: FragmentMovieDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var navController: NavController
-
     lateinit var passedMovie: Movie
-
-    val args: MovieDetailsFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +41,7 @@ class MovieDetailsFragment : DialogFragment() {
         if(dialog != null && dialog?.window != null){
             dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+            dialog?.window?.attributes?.windowAnimations = R.style.DialogAnimation
         }
         return binding.root
     }
@@ -52,7 +50,7 @@ class MovieDetailsFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 //        navController = Navigation.findNavController(view)
 
-        passedMovie = args.passedMovie
+        passedMovie = arguments?.getSerializable("passedMovie") as Movie
 
         Log.e(TAG, "onViewCreated: $passedMovie")
 

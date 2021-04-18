@@ -8,19 +8,5 @@
         android:id="@+id/movieListFragment"
         android:name="com.ahmad.aqarmaptask.ui.fragment.MovieListFragment"
         android:label="fragment_movie_list"
-        tools:layout="@layout/fragment_movie_list" >
-        <action
-            android:id="@+id/action_movieListFragment_to_movieDetailsFragment"
-            app:destination="@id/movieDetailsFragment"
-            app:popEnterAnim="@anim/fragment_fade_enter" />
-    </fragment>
-    <dialog
-        android:id="@+id/movieDetailsFragment"
-        android:name="com.ahmad.aqarmaptask.ui.fragment.MovieDetailsFragment"
-        android:label="fragment_movie_details"
-        tools:layout="@layout/fragment_movie_details" >
-        <argument
-            android:name="passedMovie"
-            app:argType="com.ahmad.aqarmaptask.model.Movie" />
-    </dialog>
+        tools:layout="@layout/fragment_movie_list" />
 </navigation>
