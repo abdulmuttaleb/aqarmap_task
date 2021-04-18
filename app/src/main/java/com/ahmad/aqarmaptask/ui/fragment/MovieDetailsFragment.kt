@@ -1,11 +1,14 @@
 package com.ahmad.aqarmaptask.ui.fragment
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.navArgs
@@ -29,7 +32,7 @@ class MovieDetailsFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, android.R.style.Theme_Material_Light_Dialog_NoActionBar_MinWidth);
+        setStyle(STYLE_NO_TITLE, android.R.style.Theme_Material_Light_Dialog_NoActionBar_MinWidth)
     }
 
     override fun onCreateView(
@@ -38,6 +41,10 @@ class MovieDetailsFragment : DialogFragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
+        if(dialog != null && dialog?.window != null){
+            dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        }
         return binding.root
     }
 
