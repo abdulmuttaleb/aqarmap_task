@@ -1,8 +1,10 @@
 package com.ahmad.aqarmaptask.remote.repository
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.ahmad.aqarmaptask.MyApplication
+import com.ahmad.aqarmaptask.model.Movie
 import com.ahmad.aqarmaptask.model.dao.MovieDao
 import com.ahmad.aqarmaptask.model.database.MovieRoomDatabase
 import com.ahmad.aqarmaptask.remote.MainApi
@@ -18,13 +20,9 @@ import kotlinx.coroutines.Dispatchers.Main
 import retrofit2.Response
 import javax.inject.Inject
 
-class MainRepository(context: Context) {
+class MainRepository(val moviesDao: MovieDao) {
     private var getPopularMoviesJob: CompletableJob? = null
-    private var moviesDao: MovieDao
-    init {
-        val moviesDatabase = MovieRoomDatabase.getInstance(context)
-        moviesDao = moviesDatabase.movieDao()
-    }
+
     fun getPopularMovies(page:Int): LiveData<Resource<Response<PopularMoviesResponse>>>{
         getPopularMoviesJob = Job()
         return object : LiveData<Resource<Response<PopularMoviesResponse>>>(){

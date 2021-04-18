@@ -87,10 +87,14 @@ class MovieListFragment : Fragment(), MovieRecyclerAdapter.MovieItemClickListene
                 is Resource.success -> {
                     val moviesList = resource.data?.body()?.results
                     if (moviesList != null) {
-                        movieRecyclerAdapter.moviesList = moviesList
+                        mainViewModel.popularMoviesList.value= moviesList
                     }
                 }
             }
+        })
+
+        mainViewModel.popularMoviesList.observe(viewLifecycleOwner, {
+            movieRecyclerAdapter.moviesList = it
         })
     }
 
