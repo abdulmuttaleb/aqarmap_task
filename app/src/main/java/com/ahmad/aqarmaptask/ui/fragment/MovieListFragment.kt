@@ -20,6 +20,7 @@ import com.ahmad.aqarmaptask.model.Movie
 import com.ahmad.aqarmaptask.remote.Resource
 import com.ahmad.aqarmaptask.ui.activity.BaseActivity
 import com.ahmad.aqarmaptask.viewmodel.MainViewModel
+import com.ahmad.aqarmaptask.viewmodel.MainViewModelFactory
 
 class MovieListFragment : Fragment(), MovieRecyclerAdapter.MovieItemClickListener {
 
@@ -47,7 +48,7 @@ class MovieListFragment : Fragment(), MovieRecyclerAdapter.MovieItemClickListene
         navController = Navigation.findNavController(view)
         //todo initialize everything here
 
-        mainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(requireActivity(), MainViewModelFactory(requireContext())).get(MainViewModel::class.java)
 
         initFragment()
 

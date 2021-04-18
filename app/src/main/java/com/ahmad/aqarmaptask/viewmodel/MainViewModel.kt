@@ -9,12 +9,14 @@ import com.ahmad.aqarmaptask.remote.response.PopularMoviesResponse
 import com.ahmad.aqarmaptask.utils.AndroidUtils.observeOnce
 import retrofit2.Response
 
-class MainViewModel: ViewModel() {
+class MainViewModel(context: Context): ViewModel() {
 
     private val getPopularMoviesRequest : MutableLiveData<Int> = MutableLiveData()
 
+    val mainRepository = MainRepository(context)
+
     val popularMovies: LiveData<Resource<Response<PopularMoviesResponse>>> = getPopularMoviesRequest.switchMap {
-        MainRepository.getPopularMovies(it)
+        mainRepository.getPopularMovies(it)
     }
 
     fun setGetPopularMovies(page:Int){
@@ -23,7 +25,7 @@ class MainViewModel: ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        MainRepository.cancelJobs()
+        mainRepository.cancelJobs()
     }
 
 }

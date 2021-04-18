@@ -1,6 +1,10 @@
 package com.ahmad.aqarmaptask.remote.repository
 
+import android.content.Context
 import androidx.lifecycle.LiveData
+import com.ahmad.aqarmaptask.MyApplication
+import com.ahmad.aqarmaptask.model.dao.MovieDao
+import com.ahmad.aqarmaptask.model.database.MovieRoomDatabase
 import com.ahmad.aqarmaptask.remote.MainApi
 import com.ahmad.aqarmaptask.remote.Resource
 import com.ahmad.aqarmaptask.remote.RetrofitBuilder
@@ -14,9 +18,13 @@ import kotlinx.coroutines.Dispatchers.Main
 import retrofit2.Response
 import javax.inject.Inject
 
-object MainRepository {
+class MainRepository(context: Context) {
     private var getPopularMoviesJob: CompletableJob? = null
-
+    private var moviesDao: MovieDao
+    init {
+        val moviesDatabase = MovieRoomDatabase.getInstance(context)
+        moviesDao = moviesDatabase.movieDao()
+    }
     fun getPopularMovies(page:Int): LiveData<Resource<Response<PopularMoviesResponse>>>{
         getPopularMoviesJob = Job()
         return object : LiveData<Resource<Response<PopularMoviesResponse>>>(){
@@ -32,6 +40,13 @@ object MainRepository {
                             val fetchPopularMoviesResponse = RetrofitBuilder.mainApi.getPopularMovies(
                                 API_KEY,page)
 
+                            if(fetchPopularMoviesResponse.isSuccessful){
+                                fetchPopularMoviesResponse.body()?.results?.let {
+                                    moviesDao.insertMovies(
+                                        it
+                                    )
+                                }
+                            }
                             withContext(Main) {
                                 value = if (fetchPopularMoviesResponse.isSuccessful) {
                                     Resource.success(fetchPopularMoviesResponse)
@@ -55,6 +70,8 @@ object MainRepository {
         getPopularMoviesJob?.cancel()
     }
 
-    private const val TAG = "MainRepository"
+    companion object {
+        private const val TAG = "MainRepository"
+    }
 
 }
