@@ -16,11 +16,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ahmad.aqarmaptask.R
 import com.ahmad.aqarmaptask.adapter.MovieRecyclerAdapter
 import com.ahmad.aqarmaptask.databinding.FragmentMovieListBinding
+import com.ahmad.aqarmaptask.model.Movie
 import com.ahmad.aqarmaptask.remote.Resource
 import com.ahmad.aqarmaptask.ui.activity.BaseActivity
 import com.ahmad.aqarmaptask.viewmodel.MainViewModel
 
-class MovieListFragment : Fragment() {
+class MovieListFragment : Fragment(), MovieRecyclerAdapter.MovieItemClickListener {
 
     private var _binding:FragmentMovieListBinding? = null
 
@@ -65,6 +66,7 @@ class MovieListFragment : Fragment() {
         binding.rvMovies.layoutManager = gridLayoutManager
 
         movieRecyclerAdapter = MovieRecyclerAdapter()
+        movieRecyclerAdapter.setMovieItemClickListener(this)
 
         binding.rvMovies.adapter = movieRecyclerAdapter
 
@@ -89,6 +91,11 @@ class MovieListFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onMovieItemClicked(movie: Movie) {
+        val action = MovieListFragmentDirections.actionMovieListFragmentToMovieDetailsFragment(passedMovie = movie)
+        navController.navigate(action)
     }
 
     override fun onDestroy() {

@@ -1,6 +1,7 @@
 package com.ahmad.aqarmaptask.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 import java.util.*
 
 data class Movie (
@@ -18,4 +19,4 @@ data class Movie (
 
     @SerializedName("vote_average")
     var voteAverage: Float? = null
-)
+):Serializable

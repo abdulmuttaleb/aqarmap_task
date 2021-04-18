@@ -11,6 +11,8 @@ import org.joda.time.DateTime
 
 class MovieRecyclerAdapter: RecyclerView.Adapter<MovieRecyclerAdapter.MovieViewHolder>() {
 
+    private lateinit var movieItemClickListener: MovieItemClickListener
+
     var moviesList: ArrayList<Movie> = arrayListOf()
     set(value) {
         field = value
@@ -34,14 +36,22 @@ class MovieRecyclerAdapter: RecyclerView.Adapter<MovieRecyclerAdapter.MovieViewH
         fun bind(movie: Movie){
             itemMovieBinding.tvMovieTitle.text = movie.title
             itemMovieBinding.tvRating.text = movie.voteAverage.toString()
-//            itemMovieBinding.tvOverview.text = movie.overview
-//            itemMovieBinding.tvDate.text = DateTime.parse(movie.releaseDate).toString("dd/MMM/yyyy")
             Picasso.get()
                     .load(NetworkUtils.IMAGES_BASE_URL.plus(movie.posterPath))
                     .resize(300, 400)
                     .centerCrop()
                     .into(itemMovieBinding.ivMoviePoster)
+            itemMovieBinding.root.setOnClickListener {
+                movieItemClickListener.onMovieItemClicked(movie)
+            }
         }
     }
 
+    interface MovieItemClickListener{
+        fun onMovieItemClicked(movie: Movie)
+    }
+
+    fun setMovieItemClickListener(listener: MovieItemClickListener){
+        this.movieItemClickListener = listener
+    }
 }

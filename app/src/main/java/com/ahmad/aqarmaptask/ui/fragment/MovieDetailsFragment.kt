@@ -1,0 +1,71 @@
+package com.ahmad.aqarmaptask.ui.fragment
+
+import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.navArgs
+import com.ahmad.aqarmaptask.databinding.FragmentMovieDetailsBinding
+import com.ahmad.aqarmaptask.model.Movie
+import com.ahmad.aqarmaptask.utils.NetworkUtils
+import com.squareup.picasso.Picasso
+import org.joda.time.DateTime
+
+
+class MovieDetailsFragment : DialogFragment() {
+
+    private var _binding: FragmentMovieDetailsBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var navController: NavController
+
+    lateinit var passedMovie: Movie
+
+    val args: MovieDetailsFragmentArgs by navArgs()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NO_TITLE, android.R.style.Theme_Material_Light_Dialog_NoActionBar_MinWidth);
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+//        navController = Navigation.findNavController(view)
+
+        passedMovie = args.passedMovie
+
+        Log.e(TAG, "onViewCreated: $passedMovie")
+
+        initFragment(passedMovie)
+    }
+
+    fun initFragment(passedMovie: Movie){
+        binding.tvMovieTitle.text = passedMovie.title
+        binding.tvOverview.text = passedMovie.overview
+        binding.tvOverview.movementMethod = ScrollingMovementMethod()
+        binding.tvDate.text = DateTime.parse(passedMovie.releaseDate).toString("dd/MMM/yyyy")
+        Picasso.get()
+            .load(NetworkUtils.IMAGES_BASE_URL.plus(passedMovie.posterPath))
+            .resize(300, 400)
+            .centerCrop()
+            .into(binding.ivMoviePoster)
+        binding.tvRating.text = passedMovie.voteAverage.toString().plus(" /10")
+
+    }
+    companion object {
+        const val TAG = "MovieDetailsFragment"
+    }
+}
